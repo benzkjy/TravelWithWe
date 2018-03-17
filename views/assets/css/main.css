@@ -4268,7 +4268,7 @@
 /* Main */
 
 	#main {
-		padding: 4rem 0 2rem 0 ;
+		padding: 4rem 5rem 2rem 5rem;
 	}
 
 		@media screen and (max-width: 736px) {

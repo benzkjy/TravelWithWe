@@ -1,0 +1,22 @@
+<% include partials/headersub %>
+    
+    <div id="main" class="container">
+        <header class="align-center">
+            <h2>New story</h2>
+                <form action="/" method="POST">
+                    <input type="text" name="title" placeholder="Title" required/>
+                    <p> </p>
+                    <input type="text" name="topic" placeholder="Topic" required/>
+                    <p> </p>
+                    <input type="text" name="image" placeholder="image" required/>
+                    <p> </p>
+                    <textarea name="describe" id="message" placeholder="Tell your story..." rows="13"></textarea>
+                    <p> </p>
+                    <button>Share</button>
+                </form>
+        </header>
+        
+            
+    </div>
+
+<% include partials/footer %>
