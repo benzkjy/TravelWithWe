@@ -2,54 +2,17 @@
 
     <!-- Banner -->
     <section class="banner full">
-        <article>
-            <img src="https://lh3.googleusercontent.com/hageMtTZF03_6nN3ETN2_ILKXdjMkNDZ-1KLP8WfCBvNjlUzB1KJ1vY1L9VNPBD_rvh_yD0zSKwvsA_163DUXpOljnDzA5WaRqDouff7yk3Df555n926eJN296adUPDO0G8VFW--j_wpe7alN6IUft5k0lJCS8ff2z22Gzn_uuUhEjgrqKMizMS_pRziSCrEjOXV81X1XfEzoLKoDXFiLqwE-IEk368sQ2fCj9GfSVQZmuBxP_4hffxKvSm2wK0YyCCEWoatU8I6xH1o06UgFO2iL-a2ZByKBrbpIoIyWnZwbZBWC5QYVUYiZphl3lMJdv-SboAKY0FwXxQS6tq7fgnL8y1DAs3Lll1KgMCEHmuAo-u3a_K9_dpRD1sSqnX_3NP2gbf0vtwW9BYxk7gqY1xJ2kyTuwXliUBKnBCxCBX47_3LYy3Ml_KIqXza9e4db9E6Su4R0go2Si4j7_ywzOgTrEblZ_OqhDBZ1neI9Sf8UX9iiiGgApa5gMCG3cOARbRZN9Jj2Iv8oKBJW5d3XDCdzaImbC63D4KGO9ivJJPJ4jv294VcMFSsez-cj7hC_DjbEjJVUh4yeD61d6QSu3GWn2HNgaEUF2FDgt82uiMRrOQn8w=w900-h600-no"
-                alt="" />
-            <div class="inner">
-                <header>
-                    <p>A free responsive web site template by
-                        <a href="https://templated.co">TEMPLATED</a>
-                    </p>
-                    <h2>Hielo</h2>
-                </header>
-            </div>
-        </article>
-        <article>
-            <img src="images/slide02.jpg" alt="" />
-            <div class="inner">
-                <header>
-                    <p>Lorem ipsum dolor sit amet nullam feugiat</p>
-                    <h2>Magna etiam</h2>
-                </header>
-            </div>
-        </article>
-        <article>
-            <img src="http://www.go-graph.com/wp-content/uploads/2018/02/DSC03041.jpg" alt="" />
-            <div class="inner">
-                <header>
-                    <p>Sed cursus aliuam veroeros lorem ipsum nullam</p>
-                    <h2>Tempus dolor</h2>
-                </header>
-            </div>
-        </article>
-        <article>
-            <img src="images/slide04.jpg" alt="" />
-            <div class="inner">
-                <header>
-                    <p>Adipiscing lorem ipsum feugiat sed phasellus consequat</p>
-                    <h2>Etiam feugiat</h2>
-                </header>
-            </div>
-        </article>
-        <article>
-            <img src="images/slide05.jpg" alt="" />
-            <div class="inner">
-                <header>
-                    <p>Ipsum dolor sed magna veroeros lorem ipsum</p>
-                    <h2>Lorem adipiscing</h2>
-                </header>
-            </div>
-        </article>
+        <% places.forEach(function(place){ %>
+            <article>
+                <img src="<%= place.image %>" alt="" />
+                <div class="inner">
+                    <header>
+                        <p><%= place.topic %></p>
+                        <h2><%= place.title %></h2>
+                    </header>
+                </div>
+            </article>
+        <% }); %>
     </section>
 
     <!-- One -->
@@ -57,45 +20,25 @@
         <div class="inner">
             <div class="grid-style">
 
-                <div>
-                    <div class="box">
-                        <div class="image fit">
-                            <img src="images/pic02.jpg" alt="" />
-                        </div>
-                        <div class="content">
-                            <header class="align-center">
-                                <p>maecenas sapien feugiat ex purus</p>
-                                <h2>Lorem ipsum dolor</h2>
-                            </header>
-                            <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor
-                                velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat
-                                lacus placerat malesuada.</p>
-                            <footer class="align-center">
-                                <a href="#" class="button alt">Learn More</a>
-                            </footer>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="box">
-                        <div class="image fit">
-                            <img src="images/pic03.jpg" alt="" />
-                        </div>
-                        <div class="content">
-                            <header class="align-center">
-                                <p>mattis elementum sapien pretium tellus</p>
-                                <h2>Vestibulum sit amet</h2>
-                            </header>
-                            <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor
-                                velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat
-                                lacus placerat malesuada.</p>
-                            <footer class="align-center">
-                                <a href="#" class="button alt">Learn More</a>
-                            </footer>
+                <% places.forEach(function(place){ %>
+                    <div>
+                        <div class="box">
+                            <div class="image fit">
+                                <img src="<%= place.image %>" alt="" />
+                            </div>
+                            <div class="content">
+                                <header class="align-center">
+                                    <p><%= place.topic %></p>
+                                    <h2><%= place.title %></h2>
+                                </header>
+                                <p> <%= place.describe %></p>
+                                <footer class="align-center">
+                                    <a href="#" class="button alt">Read More</a>
+                                </footer>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <% }); %>
 
             </div>
         </div>
@@ -105,8 +48,8 @@
     <section id="two" class="wrapper style3">
         <div class="inner">
             <header class="align-center">
-                <p>Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
-                <h2>Morbi maximus justo</h2>
+                <p>Arab Proverb</p>
+                <h2>Who lives sees much. Who travels sees more.</h2>
             </header>
         </div>
     </section>
@@ -115,38 +58,19 @@
     <section id="three" class="wrapper style2">
         <div class="inner">
             <header class="align-center">
-                <p class="special">Nam vel ante sit amet libero scelerisque facilisis eleifend vitae urna</p>
-                <h2>Morbi maximus justo</h2>
+                <p class="special">Collect a beautiful picture all over the world here.</p>
+                <h2>Best Photo</h2>
             </header>
             <div class="gallery">
-                <div>
-                    <div class="image fit">
-                        <a href="#">
-                            <img src="images/pic01.jpg" alt="" />
-                        </a>
+                <% places.forEach(function(place){ %>
+                    <div>
+                        <div class="image fit">
+                            <a href="#">
+                                <img src="<%= place.image %>" alt="" />
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <div class="image fit">
-                        <a href="#">
-                            <img src="images/pic02.jpg" alt="" />
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <div class="image fit">
-                        <a href="#">
-                            <img src="images/pic03.jpg" alt="" />
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <div class="image fit">
-                        <a href="#">
-                            <img src="images/pic04.jpg" alt="" />
-                        </a>
-                    </div>
-                </div>
+                <% }); %>
             </div>
         </div>
     </section>
