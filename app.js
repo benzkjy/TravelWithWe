@@ -71,7 +71,17 @@ app.post("/", function(req, res) {
 });
 
 app.get("/new-story", function(req, res) {
-    res.render("new.ejs");
+    res.render("new");
+});
+
+app.get("/:id", function(req, res) {
+    Place.findById(req.params.id, function(err, foundPlace) {
+        if (err) {
+            console.log(err);
+        }else{
+            res.render("show", {place: foundPlace});
+        }
+    });
 });
 
 

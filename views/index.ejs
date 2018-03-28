@@ -33,7 +33,7 @@
                                 </header>
                                 <p> <%= place.describe %></p>
                                 <footer class="align-center">
-                                    <a href="/places/<%= place._id %>" class="button alt">Read More</a>
+                                    <a href="/<%= place._id %>" class="button alt">Read More</a>
                                 </footer>
                             </div>
                         </div>
@@ -59,7 +59,7 @@
         <div class="inner">
             <header class="align-center">
                 <p class="special">Collect a beautiful picture all over the world here.</p>
-                <h2>Best Photo</h2>
+                <h2>Gallery</h2>
             </header>
             <div class="gallery">
                 <% places.forEach(function(place){ %>
