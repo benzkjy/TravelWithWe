@@ -15,7 +15,8 @@ var placeSchema = new mongoose.Schema({
     title: String,
     topic: String,
     describe: String,
-    image: String
+    image: String,
+    content: String
 });
 
 var Place = mongoose.model("Place", placeSchema);
