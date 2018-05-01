@@ -2,6 +2,7 @@ var express     =  require("express");
 var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
+var Place       = require("./models/place");
 
 mongoose.connect("mongodb://localhost/travelwithwe");
 // mongoose.Promise = global.Promise;
@@ -9,17 +10,6 @@ mongoose.connect("mongodb://localhost/travelwithwe");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({extended: true}));
-
-// SCHEMA
-var placeSchema = new mongoose.Schema({
-    title: String,
-    topic: String,
-    describe: String,
-    image: String,
-    content: String
-});
-
-var Place = mongoose.model("Place", placeSchema);
 
 // Place.create(
 //     {
