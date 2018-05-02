@@ -9,7 +9,7 @@ var placeSchema = new mongoose.Schema({
     comments:[
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "Comment"
+            ref: 'Comment'
         }
     ]
 });

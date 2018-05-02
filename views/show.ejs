@@ -7,11 +7,25 @@
             <%= place.describe %>
         </div>
         <hr>
+        
         <% place.comments.forEach(function(comment){ %>
-            <p>
-                <strong><%= comment.author %></strong> - <%= comment.text %>
-            </p>
+            <div class="self">
+                <div class="content">
+                    <header class="align-left">
+                        <h2>
+                            <%= comment.author %>
+                        </h2>
+                        
+                    </header>
+                    <p>- <%= comment.text %></p>
+                    <header class="align-right">10 days ago</span>
+                </div>
+                
+            </div>
         <% })  %>
+        <hr>
+        <a href="/<%= place._id %>/comments/new" class="button alt">COMMENT</a>
+        
     </div>
 
 <% include partials/footer %>

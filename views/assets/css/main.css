@@ -4310,3 +4310,11 @@
 			}
 
 		}
+	
+	.self {
+		margin-bottom: 2rem;
+		background: #e5e5e5;
+	}
+		.self .content {
+			padding: 3rem;
+		}

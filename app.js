@@ -3,7 +3,8 @@ var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
 var Place       = require("./models/place");
-var seedDB      = require("./seeds");
+var Comment     = require("./models/comment");
+//var seedDB      = require("./seeds");
 
 mongoose.connect("mongodb://localhost/travelwithwe");
 // mongoose.Promise = global.Promise;
@@ -11,7 +12,7 @@ mongoose.connect("mongodb://localhost/travelwithwe");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({extended: true}));
-seedDB();
+//seedDB();
 
 // Place.create(
 //     {
@@ -39,7 +40,7 @@ app.get("/", function(req, res) {
     //Get all places
     Place.find({}, function(err, allPlaces) {
         if (err) {
-            console.log(err);
+            //console.log(err);
         }else{
             res.render("index", {places:allPlaces});
         }
@@ -63,8 +64,9 @@ app.post("/", function(req, res) {
     // res.redirect("/");
 });
 
+
 app.get("/new-story", function(req, res) {
-    res.render("new");
+    res.render("newplace");
 });
 
 app.get("/:id", function(req, res) {
@@ -72,13 +74,45 @@ app.get("/:id", function(req, res) {
         if (err) {
             //console.log(err);
         }else{
-            console.log(foundPlace);
+            //console.log(foundPlace);
             res.render("show", {place: foundPlace});
         }
     });
 });
 
+app.get("/:id/comments/new", function (req, res) {
+    Place.findById(req.params.id, function (err, foundPlace) {
+        if (err) {
+            console.log(err);
+        } else {
+            //console.log(foundPlace);
+            res.render("newcomment", { place: foundPlace });
+        }
+    });
+});
 
+app.post("/:id/comments", function(req, res) {
+    Place.findById(req.params.id, function (err, foundPlace) {
+        console.log(foundPlace);
+        if (err) {
+            //console.log(err);
+            redirect("/");
+        } else {
+            //console.log(req.body.comment);
+            Comment.create(req.body.comment, function(err, comment) {
+                if (err) {
+                    console.log("Hello bug");
+                } else{
+                    //console.log(comment);
+                    //console.log(foundPlace);
+                    foundPlace.comments.push(comment);
+                    foundPlace.save();
+                    res.redirect('/' + foundPlace._id);
+                }
+            })
+        }
+    });
+});
 
 app.listen(process.env.PORT||8080, function(){
     console.log("Server started!!");

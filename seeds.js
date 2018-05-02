@@ -29,7 +29,7 @@ function seedDB() {
         if (err) {
             console.log(err)
         }
-        console.log("removed places!")
+        console.log("removed comment!")
         //add a few places
         data.forEach(function (seed) {
             Place.create(seed, function (err, place) {
