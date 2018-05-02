@@ -3,6 +3,7 @@ var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
 var Place       = require("./models/place");
+var seedDB      = require("./seeds");
 
 mongoose.connect("mongodb://localhost/travelwithwe");
 // mongoose.Promise = global.Promise;
@@ -10,6 +11,7 @@ mongoose.connect("mongodb://localhost/travelwithwe");
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
 app.use(bodyParser.urlencoded({extended: true}));
+seedDB();
 
 // Place.create(
 //     {
@@ -66,10 +68,11 @@ app.get("/new-story", function(req, res) {
 });
 
 app.get("/:id", function(req, res) {
-    Place.findById(req.params.id, function(err, foundPlace) {
+    Place.findById(req.params.id).populate("comments").exec(function(err, foundPlace) {
         if (err) {
-            console.log(err);
+            //console.log(err);
         }else{
+            console.log(foundPlace);
             res.render("show", {place: foundPlace});
         }
     });

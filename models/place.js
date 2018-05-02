@@ -5,7 +5,13 @@ var placeSchema = new mongoose.Schema({
     topic: String,
     describe: String,
     image: String,
-    content: String
+    // content: String
+    comments:[
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Comment"
+        }
+    ]
 });
 
 //Model explort
