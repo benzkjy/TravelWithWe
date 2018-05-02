@@ -6,6 +6,7 @@
         <div>
             <%= place.describe %>
         </div>
+        <h4 class="align-right">Published By <%= place.author.username %></h4>
         <hr>
         
         <% place.comments.forEach(function(comment){ %>
@@ -13,7 +14,7 @@
                 <div class="content">
                     <header class="align-left">
                         <h2>
-                            <%= comment.author %>
+                            <%= comment.author.username %>
                         </h2>
                         
                     </header>

@@ -30,9 +30,13 @@ router.post("/:id/comments", isLoggedIn, function (req, res) {
                 } else {
                     //console.log(comment);
                     //console.log(foundPlace);
+                    comment.author.id = req.user._id;
+                    comment.author.username = req.user.username;
+                    comment.save()
                     foundPlace.comments.push(comment);
                     foundPlace.save();
                     res.redirect('/' + foundPlace._id);
+                    //console.log(comment);
                 }
             })
         }

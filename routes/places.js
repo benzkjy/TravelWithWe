@@ -13,17 +13,22 @@ router.get("/", function (req, res) {
     });
     // res.render("index",{places:places});
 });
-router.post("/", function (req, res) {
+router.post("/", isLoggedIn, function (req, res) {
     var title = req.body.title;
     var topic = req.body.topic;
     var describe = req.body.describe;
     var image = req.body.image;
-    var newPlace = { title: title, topic: topic, describe: describe, image: image }
+    var author = {
+        id: req.user._id,
+        username: req.user.username
+    }
+    var newPlace = { title: title, topic: topic, describe: describe, image: image, author: author }
     // places.push(newPlace);
     Place.create(newPlace, function (err, newlyCreated) {
         if (err) {
             console.log(err);
         } else {
+            // console.log(newlyCreated);
             res.redirect("/");
         }
     })
