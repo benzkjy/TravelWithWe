@@ -50,6 +50,38 @@ router.get("/:id", function (req, res) {
     });
 });
 
+//EDIT
+router.get("/:id/edit", function (req, res) {
+    Place.findById(req.params.id, function (err, foundPlace) {
+        if (err) {
+            res.redirect("/");
+        } else{
+            res.render("places/edit", {place: foundPlace});
+        }
+    });
+});
+
+router.put("/:id", function(req, res) {
+    Place.findByIdAndUpdate(req.params.id, req.body.place, function(err, updatePlace) {
+        if (err) {
+            res.redirect("/");
+        } else{
+            res.redirect("/" + req.params.id);
+        }
+    })
+});
+
+//DESTROY
+router.delete("/:id", function(req, res) {
+    Place.findByIdAndRemove(req.params.id, function(err) {
+        if (err) {
+            res.redirect("/");
+        } else{
+            res.redirect("/");
+        }
+    });
+});
+
 //middleware
 function isLoggedIn(req, res, next) {
     if (req.isAuthenticated()) {

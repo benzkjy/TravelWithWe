@@ -1979,7 +1979,7 @@
 	input[type="button"],
 	button,
 	.button {
-		background-color: #f2f2f2;
+		background-color: #ef3b6b;
 		color: #000 !important;
 	}
 
@@ -2038,7 +2038,7 @@
 		input[type="button"].special,
 		button.special,
 		.button.special {
-			background-color: #8a4680;
+			background-color: #f0e10d;
 			color: #ffffff !important;
 		}
 
@@ -2061,7 +2061,7 @@
 /* Form */
 
 	form {
-		margin: 0 0 2rem 0;
+		margin: 0 0 0 0;
 	}
 
 	label {
