@@ -2,8 +2,11 @@ var express     =  require("express");
 var app         = express();
 var bodyParser  = require("body-parser");
 var mongoose    = require("mongoose");
+var passport    = require("passport");
+var LocalStrategy = require("passport-local");
 var Place       = require("./models/place");
 var Comment     = require("./models/comment");
+var User        = require("./models/user");
 //var seedDB      = require("./seeds");
 
 mongoose.connect("mongodb://localhost/travelwithwe");
@@ -42,7 +45,7 @@ app.get("/", function(req, res) {
         if (err) {
             //console.log(err);
         }else{
-            res.render("index", {places:allPlaces});
+            res.render("places/index", {places:allPlaces});
         }
     });
     // res.render("index",{places:places});
@@ -66,7 +69,7 @@ app.post("/", function(req, res) {
 
 
 app.get("/new-story", function(req, res) {
-    res.render("newplace");
+    res.render("places/newplace");
 });
 
 app.get("/:id", function(req, res) {
@@ -75,7 +78,7 @@ app.get("/:id", function(req, res) {
             //console.log(err);
         }else{
             //console.log(foundPlace);
-            res.render("show", {place: foundPlace});
+            res.render("places/show", {place: foundPlace});
         }
     });
 });
@@ -86,14 +89,14 @@ app.get("/:id/comments/new", function (req, res) {
             console.log(err);
         } else {
             //console.log(foundPlace);
-            res.render("newcomment", { place: foundPlace });
+            res.render("comments/newcomment", { place: foundPlace });
         }
     });
 });
 
 app.post("/:id/comments", function(req, res) {
     Place.findById(req.params.id, function (err, foundPlace) {
-        console.log(foundPlace);
+        //console.log(foundPlace);
         if (err) {
             //console.log(err);
             redirect("/");
