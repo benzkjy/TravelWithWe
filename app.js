@@ -9,6 +9,10 @@ var Comment     = require("./models/comment");
 var User        = require("./models/user");
 //var seedDB      = require("./seeds");
 
+var placeRoutes     = require("./routes/places"),
+    commentRoutes   = require("./routes/comments"),
+    indexRoutes      = require("./routes/index")
+
 mongoose.connect("mongodb://localhost/travelwithwe");
 // mongoose.Promise = global.Promise;
 
@@ -55,131 +59,9 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.get("/", function(req, res) {
-    //Get all places
-    Place.find({}, function(err, allPlaces) {
-        if (err) {
-            //console.log(err);
-        }else{
-            res.render("places/index", {places:allPlaces, currentUser: req.user});
-        }
-    });
-    // res.render("index",{places:places});
-});
-app.post("/", function(req, res) {
-    var title = req.body.title;
-    var topic = req.body.topic;
-    var describe = req.body.describe;
-    var image = req.body.image;
-    var newPlace = {title: title, topic: topic, describe: describe, image: image}
-    // places.push(newPlace);
-    Place.create(newPlace, function(err, newlyCreated) {
-        if (err) {
-            console.log(err);
-        }else{
-            res.redirect("/");
-        }
-    })
-    // res.redirect("/");
-});
-
-// AUTH ROUTES
-
-app.get("/register", function (req, res) {
-    res.render("register");
-});
-
-app.post("/register", function(req,res) {
-    var newUser = new User({ username: req.body.username});
-    User.register(newUser, req.body.password, function (err, user) {
-        if (err) { //if username has been in DB คือมีชื่อซ้ำ
-            console.log(err);
-            return res.render("register");
-        }
-        passport.authenticate("local")(req, res, function () {
-            res.redirect("/");
-        })
-    });
-});
-
-app.get("/login", function(req, res) {
-    res.render("login");
-});
-
-app.post("/login", passport.authenticate("local", 
-    {
-        successRedirect: "/",
-        failureRedirect: "/login"
-    }), function(req, res) {
-});
-
-//logout route
-app.get("/logout", function (req, res) {
-    req.logout();
-    // console.log("Logout");
-    res.redirect("/");
-});
-
-//middleware
-function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated()) {
-        return next();
-    }
-    res.redirect("/login");
-}
-
-
-app.get("/new-story", isLoggedIn, function(req, res) {
-    res.render("places/newplace");
-});
-
-app.get("/:id", function(req, res) {
-    Place.findById(req.params.id).populate("comments").exec(function(err, foundPlace) {
-        if (err) {
-            //console.log(err);
-        }else{
-            //console.log(foundPlace);
-            res.render("places/show", {place: foundPlace});
-        }
-    });
-});
-
-// COMMENT ROUTES
-
-app.get("/:id/comments/new", isLoggedIn, function (req, res) {
-    Place.findById(req.params.id, function (err, foundPlace) {
-        if (err) {
-            console.log(err);
-        } else {
-            //console.log(foundPlace);
-            res.render("comments/newcomment", { place: foundPlace });
-        }
-    });
-});
-
-app.post("/:id/comments", isLoggedIn, function(req, res) {
-    Place.findById(req.params.id, function (err, foundPlace) {
-        //console.log(foundPlace);
-        if (err) {
-            //console.log(err);
-            redirect("/");
-        } else {
-            //console.log(req.body.comment);
-            Comment.create(req.body.comment, function(err, comment) {
-                if (err) {
-                    console.log("Hello bug");
-                } else{
-                    //console.log(comment);
-                    //console.log(foundPlace);
-                    foundPlace.comments.push(comment);
-                    foundPlace.save();
-                    res.redirect('/' + foundPlace._id);
-                }
-            })
-        }
-    });
-});
-
+app.use(indexRoutes);
+app.use(placeRoutes);
+app.use(commentRoutes);
 
 app.listen(process.env.PORT||8080, function(){
     console.log("Server started!!");
