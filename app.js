@@ -39,13 +39,29 @@ app.use(bodyParser.urlencoded({extended: true}));
 //     { title: "Train To Aurora", topic: "Praview Russia to Norway", describe: "นั่งรถไฟสู่แสงเหนือ EP.0 Preview ก่อนเปิดฉากมหากาพย์ 32 วัน รัสเซีย – นอร์เวย์สวัสดีค่ะ ยินดีต้อนรับกลับสู่รีวิวมหากาพย์อีกครั้ง พวกเราเพิ่งกลับมาจากการเดินทางทรหดพร้อมกับอายุที่ใกล้ 30 มากขึ้น กับทริปแบ็คแพ็ค 32 วัน จากขวาสุดของรัสเซีย Vladivostok สู่ Tromso เมืองแห่งแสงเหนือ, 4 ประเทศ อากาศ -30 องศา...", image: "http://www.go-graph.com/wp-content/uploads/2017/03/00.jpg" }
 // ];
 
+app.use(require("express-session")({
+    secret: "Once I sleep",
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use(function (req, res, next) {
+    res.locals.currentUser = req.user;
+    next();
+});
+
 app.get("/", function(req, res) {
     //Get all places
     Place.find({}, function(err, allPlaces) {
         if (err) {
             //console.log(err);
         }else{
-            res.render("places/index", {places:allPlaces});
+            res.render("places/index", {places:allPlaces, currentUser: req.user});
         }
     });
     // res.render("index",{places:places});
@@ -67,8 +83,53 @@ app.post("/", function(req, res) {
     // res.redirect("/");
 });
 
+// AUTH ROUTES
 
-app.get("/new-story", function(req, res) {
+app.get("/register", function (req, res) {
+    res.render("register");
+});
+
+app.post("/register", function(req,res) {
+    var newUser = new User({ username: req.body.username});
+    User.register(newUser, req.body.password, function (err, user) {
+        if (err) { //if username has been in DB คือมีชื่อซ้ำ
+            console.log(err);
+            return res.render("register");
+        }
+        passport.authenticate("local")(req, res, function () {
+            res.redirect("/");
+        })
+    });
+});
+
+app.get("/login", function(req, res) {
+    res.render("login");
+});
+
+app.post("/login", passport.authenticate("local", 
+    {
+        successRedirect: "/",
+        failureRedirect: "/login"
+    }), function(req, res) {
+});
+
+//logout route
+app.get("/logout", function (req, res) {
+    req.logout();
+    // console.log("Logout");
+    res.redirect("/");
+});
+
+//middleware
+function isLoggedIn(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+    }
+    res.redirect("/login");
+}
+
+
+app.get("/new-story", isLoggedIn, function(req, res) {
     res.render("places/newplace");
 });
 
@@ -83,7 +144,9 @@ app.get("/:id", function(req, res) {
     });
 });
 
-app.get("/:id/comments/new", function (req, res) {
+// COMMENT ROUTES
+
+app.get("/:id/comments/new", isLoggedIn, function (req, res) {
     Place.findById(req.params.id, function (err, foundPlace) {
         if (err) {
             console.log(err);
@@ -94,7 +157,7 @@ app.get("/:id/comments/new", function (req, res) {
     });
 });
 
-app.post("/:id/comments", function(req, res) {
+app.post("/:id/comments", isLoggedIn, function(req, res) {
     Place.findById(req.params.id, function (err, foundPlace) {
         //console.log(foundPlace);
         if (err) {
@@ -116,6 +179,7 @@ app.post("/:id/comments", function(req, res) {
         }
     });
 });
+
 
 app.listen(process.env.PORT||8080, function(){
     console.log("Server started!!");

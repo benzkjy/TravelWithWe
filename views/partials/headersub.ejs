@@ -16,14 +16,34 @@
 		<!-- Header -->
 			<header id="header">
 				<div class="logo"><a href="/">TravelWithWe</a></div>
-				<a href="#menu">Menu</a>
+				<% if(!currentUser){ %>
+                	<a href="#menu">Menu</a>
+            	<% } else{ %>
+                	<a href="#menu"><%= currentUser.username %></a>
+            	<% } %>
 			</header>
 
 		<!-- Nav -->
 			<nav id="menu">
 				<ul class="links">
-					<li><a href="/">Home</a></li>
-					<li><a href="/new-story">New story</a></li>
-					<li><a href="elements.html">Elements</a></li>
+					<% if(!currentUser){ %>
+                    <li>
+                        <a href="/new-story">Add New story</a>
+                    </li>
+                    <li>
+                        <a href="/register">Register</a>
+                    </li>
+                    <li>
+                        <a href="/login">Log in</a>
+                    </li>
+                <% } else{ %>
+                    <li><a href="#">Signed In As <%= currentUser.username %></a></li>
+                    <li>
+                        <a href="/new-story">Add New story</a>
+                    </li>
+                    <li>
+                        <a href="/logout">Log out</a>
+                    </li>
+                <% } %>
 				</ul>
 			</nav>

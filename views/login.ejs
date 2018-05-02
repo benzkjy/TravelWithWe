@@ -1,0 +1,14 @@
+<% include partials/headersub %>
+    <div id="main" class="container">
+        <header class="align-center">
+            <h2>Log in!</h2>
+            <form action="/login" method="POST">
+                <input type="text" name="username" placeholder="username" required/>
+                <p> </p>
+                <input type="password" name="password" placeholder="password" required/>
+                <p> </p>
+                <button>Submit</button>
+            </form>
+        </header>
+    </div>
+<% include partials/footer %>
