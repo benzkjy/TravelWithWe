@@ -7,17 +7,18 @@
             <%= place.describe %>
         </div>
         <h4 class="align-right">Published By <%= place.author.username %></h4>
-        <ul class="actions">
-            <li>
-                <a href="/<%= place._id %>/edit" class="button special">EDIT</a>
-            </li>
-            <li>
-                <form action="/<%= place._id %>?_method=DELETE" method="POST">
-                    <button class="danger">DELETE</button>
-                </form>
-            </li>
-        </ul>
-        
+        <% if(currentUser && place.author.id.equals(currentUser._id)){ %>
+            <ul class="actions">
+                <li>
+                    <a href="/<%= place._id %>/edit" class="button special">EDIT</a>
+                </li>
+                <li>
+                    <form action="/<%= place._id %>?_method=DELETE" method="POST">
+                        <button class="danger">DELETE</button>
+                    </form>
+                </li>
+            </ul>
+        <% } %>
         <hr>
         
         <% place.comments.forEach(function(comment){ %>
@@ -30,9 +31,9 @@
                         
                     </header>
                     <p>- <%= comment.text %></p>
-                    <header class="align-right">10 days ago</span>
+                    <header class="align-right">1 minute ago</span>
                 </div>
-                
+                <!-- <a href="/places/<%= place._id %>/comments/<%= comment._id %>/edit" class="button special">EDIT</a> -->
             </div>
         <% })  %>
         <hr>

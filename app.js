@@ -14,7 +14,8 @@ var placeRoutes     = require("./routes/places"),
     commentRoutes   = require("./routes/comments"),
     indexRoutes      = require("./routes/index")
 
-mongoose.connect("mongodb://localhost/travelwithwe");
+//mongoose.connect("mongodb://localhost/travelwithwe");
+mongoose.connect("mongodb://benz:12345@ds012578.mlab.com:12578/travelwithwe");
 // mongoose.Promise = global.Promise;
 
 app.set("view engine", "ejs");

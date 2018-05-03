@@ -1,22 +1,19 @@
-<% include ../partials/headersub %>
-
-    <div id="main" class="container">
-        <header class="align-center">
-            <h2>Edit <%= place.topic %></h2>
-            <form action="/<%= place._id %>/?_method=PUT" method="POST">
-                <input type="text" name="place[title]" value="<%= place.title %>" required/>
-                <p> </p>
-                <input type="text" name="place[topic]" value="<%= place.topic %>" required/>
-                <p> </p>
-                <input type="text" name="place[image]" value="<%= place.image %>" required/>
-                <p> </p>
-                <input type="text" name="place[describe]" value="<%= place.describe %>" required/>
-                <p> </p>
-                <button>Submit</button>
-            </form>
-        </header>
-
-
-    </div>
-
-<% include ../partials/footer %>
+<div id="main" class="container">
+    <header class="align-center">
+        <h2>Edit
+            <%= place.topic %>
+        </h2>
+        <form action="/<%= place._id %>/?_method=PUT" method="POST">
+            <input type="text" name="place[title]" value="<%= place.title %>" required/>
+            <p> </p>
+            <input type="text" name="place[topic]" value="<%= place.topic %>" required/>
+            <p> </p>
+            <input type="text" name="place[image]" value="<%= place.image %>" required/>
+            <p> </p>
+            <input type="text" name="place[describe]" value="<%= place.describe %>" required/>
+            <p> </p>
+            <button>Submit</button>
+        </form>
+    </header>
+</div>
+    

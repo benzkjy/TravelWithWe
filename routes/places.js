@@ -51,17 +51,13 @@ router.get("/:id", function (req, res) {
 });
 
 //EDIT
-router.get("/:id/edit", function (req, res) {
+router.get("/:id/edit", checkPlaceOwnership, function (req, res) {
     Place.findById(req.params.id, function (err, foundPlace) {
-        if (err) {
-            res.redirect("/");
-        } else{
-            res.render("places/edit", {place: foundPlace});
-        }
+        res.render("places/edit", { place: foundPlace });
     });
 });
 
-router.put("/:id", function(req, res) {
+router.put("/:id", checkPlaceOwnership,function(req, res) {
     Place.findByIdAndUpdate(req.params.id, req.body.place, function(err, updatePlace) {
         if (err) {
             res.redirect("/");
@@ -72,7 +68,7 @@ router.put("/:id", function(req, res) {
 });
 
 //DESTROY
-router.delete("/:id", function(req, res) {
+router.delete("/:id", checkPlaceOwnership, function(req, res) {
     Place.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             res.redirect("/");
@@ -88,6 +84,24 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect("/login");
+}
+
+function checkPlaceOwnership(req, res, next) {
+    if (req.isAuthenticated()) {
+        Place.findById(req.params.id, function (err, foundPlace) {
+            if (err) {
+                res.redirect("/");
+            } else {
+                if (foundPlace.author.id.equals(req.user._id)) {
+                    next();
+                } else {
+                    res.redirect("back");
+                }
+            }
+        });
+    } else {
+        res.redirect("back");
+    }
 }
 
 module.exports = router;
